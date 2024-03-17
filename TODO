@@ -11,7 +11,7 @@ Documentation:
 
 Authentication:
   [] Middleware
-  - [] profile_id usage
+  - [x] profile_id usage
   - [] validate req.profile
   - [] make sure only users that are on the contract can access their contracts.
 
@@ -26,6 +26,7 @@ Endpoints:
 
 Extras:
   [] transaction ID
+  [] API MESSAGE RESPONSES
   [] tests
   [] UML
   [] Frontend usage
