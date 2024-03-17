@@ -1,13 +1,13 @@
 Documentation:
   [x] Read documentation
-  [ ] Make documentation
-    - [ ] Sources
-    - [ ] Endpoints
-    - [ ] Patterns
-    - [ ] Tests
-    - [ ] Docker
-    - [ ] Clean Architecture
-    - [ ] Extras
+  [] Make documentation
+    - [] Sources
+    - [] Endpoints
+    - [] Patterns
+    - [] Tests
+    - [] Docker
+    - [] Clean Architecture
+    - [] Extras
 
 Authentication:
   [] Middleware
@@ -16,16 +16,18 @@ Authentication:
   - [] make sure only users that are on the contract can access their contracts.
 
 Endpoints:
-  [] **_GET_** `/contracts/:id`
-  [] **_GET_** `/contracts`
-  [] **_GET_** `/jobs/unpaid`
-  [] **_POST_** `/jobs/:job_id/pay`
-  [] **_POST_** `/balances/deposit/:userId`
-  [] **_GET_** `/admin/best-profession?start=<date>&end=<date>`
-  [] **_GET_** `/admin/best-clients?start=<date>&end=<date>&limit=<integer>`
+  [x] **_GET_** `/contracts/:id` - fix!!
+  [] **_GET_** `/contracts` - create
+  [] **_GET_** `/jobs/unpaid` - create
+  [] **_POST_** `/jobs/:job_id/pay` - create
+  [] **_POST_** `/balances/deposit/:userId` - create
+  [] **_GET_** `/admin/best-profession?start=<date>&end=<date>` - create
+  [] **_GET_** `/admin/best-clients?start=<date>&end=<date>&limit=<integer>` - create
 
 Extras:
+  [] transaction ID
   [] tests
+  [] UML
   [] Frontend usage
   [] Postman collection
   [] performance
