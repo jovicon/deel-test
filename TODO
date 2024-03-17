@@ -17,7 +17,7 @@ Authentication:
 
 Endpoints:
   [x] **_GET_** `/contracts/:id` - fix!!
-  [] **_GET_** `/contracts` - create
+  [x] **_GET_** `/contracts` - create
   [] **_GET_** `/jobs/unpaid` - create
   [] **_POST_** `/jobs/:job_id/pay` - create
   [] **_POST_** `/balances/deposit/:userId` - create

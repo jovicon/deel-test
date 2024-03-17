@@ -1,3 +1,9 @@
+/**
+ * @returns contract by id
+ * Filter by profile id
+ * It should return the contract only if it belongs to the profile calling.
+ */
+
 const GetContractByID = async (req, res) => {
   const { Contract } = req.app.get("models");
   const { id } = req.params;

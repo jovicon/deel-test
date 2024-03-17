@@ -4,6 +4,7 @@ const { sequelize } = require("./model");
 
 const { getProfile } = require("./middleware/getProfile");
 
+const { GetContracts } = require("./useCases/GetContracts");
 const { GetContractByID } = require("./useCases/GetContractbyProfileID");
 
 const app = express();
@@ -11,6 +12,7 @@ app.use(bodyParser.json());
 app.set("sequelize", sequelize);
 app.set("models", sequelize.models);
 
+app.get("/contracts", getProfile, GetContracts);
 app.get("/contracts/:id", getProfile, GetContractByID);
 
 module.exports = app;
