@@ -1,7 +1,15 @@
 /**
- * @returns array of contract
- * Filter by profile id
- * Returns a list of contracts belonging to a user (client or contractor)
+ * @returns array of Jobs
+ * Get all unpaid jobs for a user (**_either_** a client or contractor)
+ * for **_active contracts only_**.
+ *
+ * Doubts:
+ * - What is the meaning of "active contracts only"?
+ *
+ * Domain suppositions:
+ * - active contracts are those that exist.
+ * because, contract with id 1 is terminated
+ * but there are unpaid jobs for it.
  */
 
 const { Op } = require("sequelize");
