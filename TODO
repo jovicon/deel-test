@@ -1,0 +1,34 @@
+Documentation:
+  [x] Read documentation
+  [ ] Make documentation
+    - [ ] Sources
+    - [ ] Endpoints
+    - [ ] Patterns
+    - [ ] Tests
+    - [ ] Docker
+    - [ ] Clean Architecture
+    - [ ] Extras
+
+Authentication:
+  [] Middleware
+  - [] profile_id usage
+  - [] validate req.profile
+  - [] make sure only users that are on the contract can access their contracts.
+
+Endpoints:
+  [] **_GET_** `/contracts/:id`
+  [] **_GET_** `/contracts`
+  [] **_GET_** `/jobs/unpaid`
+  [] **_POST_** `/jobs/:job_id/pay`
+  [] **_POST_** `/balances/deposit/:userId`
+  [] **_GET_** `/admin/best-profession?start=<date>&end=<date>`
+  [] **_GET_** `/admin/best-clients?start=<date>&end=<date>&limit=<integer>`
+
+Extras:
+  [] tests
+  [] Frontend usage
+  [] Postman collection
+  [] performance
+  [] prettier and eslint
+  [] logging
+  [] docker
