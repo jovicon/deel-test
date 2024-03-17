@@ -13,8 +13,6 @@ const NOT_TERMINATED_CONTRACTS = {
 };
 
 const GetContracts = async (req, res) => {
-  console.log("GetContracts");
-
   const { Contract } = req.app.get("models");
   const { profile } = req;
 
