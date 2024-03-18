@@ -4,7 +4,6 @@
  * (at the deposit moment)
  */
 
-const { transaction } = require("sequelize");
 const { jobsByClientId } = require("./GetUnpaidJobs");
 
 const integerValidation = (money) => {
