@@ -65,7 +65,7 @@ Below is a list of the required API's for the application.
 
 1. **_GET_** `/admin/best-clients?start=<date>&end=<date>&limit=<integer>` - returns the clients the paid the most for jobs in the query time period. limit query parameter should be applied, default limit is 2.
 
-```
+```json
  [
     {
         "id": 1,

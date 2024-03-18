@@ -75,4 +75,4 @@ const mustPaidJobsToContractHashMap = (acc, job) => {
 
 const hashmapReducer = (hashmap) => (a, b) => hashmap[a] > hashmap[b] ? a : b;
 
-module.exports = { BestProfession };
+module.exports = { BestProfession, getPaidJobsWithContract, datesValidation };

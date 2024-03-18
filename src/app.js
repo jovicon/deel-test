@@ -15,6 +15,7 @@ const { PayForAJob } = require("./useCases/PayForAJob");
 const { DepositMoneyByUserID } = require("./useCases/DepositMoneyByUserID");
 
 const { BestProfession } = require("./useCases/BestProfession");
+const { BestClients } = require("./useCases/BestClients");
 
 const app = express();
 app.use(bodyParser.json());
@@ -30,5 +31,6 @@ app.post("/jobs/:job_id/pay", isClient, PayForAJob);
 app.post("/balances/deposit/:userId", isClient, DepositMoneyByUserID);
 
 app.get("/admin/best-profession", isAdmin, BestProfession);
+app.get("/admin/best-clients", isAdmin, BestClients);
 
 module.exports = app;

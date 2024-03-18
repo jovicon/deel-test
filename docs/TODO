@@ -10,10 +10,10 @@ Documentation:
     - [] Extras
 
 Authentication:
-  [] Middleware
+  [x] Middleware
   - [x] profile_id usage
   - [x] validate req.profile
-  - [] make sure only users that are on the contract can access their contracts.
+  - [x] make sure only users that are on the contract can access their contracts.
 
 Endpoints:
   [x] **_GET_** `/contracts/:id` - fix!!
@@ -21,17 +21,17 @@ Endpoints:
   [x] **_GET_** `/jobs/unpaid` - create
   [x] **_POST_** `/jobs/:job_id/pay` - create
   [x] **_POST_** `/balances/deposit/:userId` - create
-  [] **_GET_** `/admin/best-profession?start=<date>&end=<date>` - create
-  [] **_GET_** `/admin/best-clients?start=<date>&end=<date>&limit=<integer>` - create
+  [x] **_GET_** `/admin/best-profession?start=<date>&end=<date>` - create
+  [x] **_GET_** `/admin/best-clients?start=<date>&end=<date>&limit=<integer>` - create
 
 Extras:
-  [] transaction ID
+  [x] transactions
   [] API MESSAGE RESPONSES
-  [] tests
-  [] UML
+  [] Unit tests
+  [x] UML
   [] Frontend usage
-  [] Postman collection
-  [] performance
-  [] prettier and eslint
+  [x] Postman collection
+  [] performances tests
+  [x] prettier and eslint
   [] logging
   [] docker

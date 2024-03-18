@@ -4,32 +4,39 @@
  * (at the deposit moment)
  */
 
+const { transaction } = require("sequelize");
 const { jobsByClientId } = require("./GetUnpaidJobs");
+
+const integerValidation = (money) => {
+  if (!Number.isInteger(money)) throw new Error("Money should be an integer");
+};
 
 const DepositMoneyByUserID = async (req, res) => {
   const { money } = req.body;
   const { profile } = req;
 
-  const jobs = await jobsByClientId(profile.id);
-
-  const total = jobs.reduce((acc, job) => acc + job.price, 0);
-  const twentyFivePercent = total * 0.25;
-
-  if (money > twentyFivePercent)
-    return res.status(400).json({ message: "Can't deposit more than 25%" });
-
-  const t = await profile.sequelize.transaction();
-
   try {
-    profile.balance += money;
-    await profile.save({ transaction: t });
-    await t.commit();
+    integerValidation(money);
+
+    const jobs = await jobsByClientId(profile.id);
+
+    const total = jobs.reduce((acc, job) => acc + job.price, 0);
+    const twentyFivePercent = total * 0.25;
+
+    if (money > twentyFivePercent)
+      return res.status(400).json({ message: "Can't deposit more than 25%" });
+
+    const result = await req.app.get("sequelize").transaction(async (t) => {
+      profile.balance += money;
+      await profile.save({ transaction: t });
+
+      return profile;
+    });
+
+    res.json({ message: "Deposit made", profile });
   } catch (error) {
-    await t.rollback();
     return res.status(500).json({ message: error.message });
   }
-
-  res.json({ message: "Deposit made", profile });
 };
 
 module.exports = { DepositMoneyByUserID };
