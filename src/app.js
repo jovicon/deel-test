@@ -11,6 +11,8 @@ const { GetContractByID } = require("./useCases/GetContractbyProfileID");
 const { GetUnpaidJobs } = require("./useCases/GetUnpaidJobs");
 const { PayForAJob } = require("./useCases/PayForAJob");
 
+const { DepositMoneyByUserID } = require("./useCases/DepositMoneyByUserID");
+
 const app = express();
 app.use(bodyParser.json());
 app.set("sequelize", sequelize);
@@ -21,5 +23,7 @@ app.get("/contracts/:id", getProfile, GetContractByID);
 
 app.get("/jobs/unpaid", getProfile, GetUnpaidJobs);
 app.post("/jobs/:job_id/pay", isClient, PayForAJob);
+
+app.post("/balances/deposit/:userId", isClient, DepositMoneyByUserID);
 
 module.exports = app;

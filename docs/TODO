@@ -20,7 +20,7 @@ Endpoints:
   [x] **_GET_** `/contracts` - create
   [x] **_GET_** `/jobs/unpaid` - create
   [x] **_POST_** `/jobs/:job_id/pay` - create
-  [] **_POST_** `/balances/deposit/:userId` - create
+  [x] **_POST_** `/balances/deposit/:userId` - create
   [] **_GET_** `/admin/best-profession?start=<date>&end=<date>` - create
   [] **_GET_** `/admin/best-clients?start=<date>&end=<date>&limit=<integer>` - create
 

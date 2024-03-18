@@ -12,6 +12,8 @@
  * but there are unpaid jobs for it.
  */
 
+const { Job, Contract } = require("../model");
+
 const { Op } = require("sequelize");
 
 const unpaidJobsByContract = (Ids) => {
@@ -23,12 +25,9 @@ const unpaidJobsByContract = (Ids) => {
   };
 };
 
-const GetUnpaidJobs = async (req, res) => {
-  const { Contract, Job } = req.app.get("models");
-  const { profile } = req;
-
+const jobsByClientId = async (ClientId) => {
   const contracts = await Contract.findAll({
-    where: { ClientId: profile.id },
+    where: { ClientId },
   });
 
   const contractIds = contracts.map((contract) => contract.id);
@@ -37,9 +36,19 @@ const GetUnpaidJobs = async (req, res) => {
     where: { ...unpaidJobsByContract(contractIds) },
   });
 
-  if (jobs.length === 0) return res.status(404).end();
+  if (jobs.length === 0) throw new Error("No unpaid jobs");
 
-  res.json(jobs);
+  return jobs;
 };
 
-module.exports = { GetUnpaidJobs };
+const GetUnpaidJobs = async (req, res) => {
+  try {
+    const { profile } = req;
+    const jobs = await jobsByClientId(profile.id);
+    res.json(jobs);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { GetUnpaidJobs, unpaidJobsByContract, jobsByClientId };
