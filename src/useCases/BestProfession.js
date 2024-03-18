@@ -5,19 +5,27 @@
 const { Op } = require("sequelize");
 const { Job, Profile, Contract } = require("../model");
 
-const mustPaidJobsToHashMap = (acc, job) => {
-  const {
-    Contract: { ContractorId },
-  } = job;
+const BestProfession = async (req, res) => {
+  try {
+    const { start, end } = req.query;
 
-  !acc[ContractorId]
-    ? (acc[ContractorId] = job.price)
-    : (acc[ContractorId] += job.price);
+    datesValidation(start, end);
 
-  return acc;
+    const paidJobs = await getPaidJobsWithContract(start, end);
+
+    const mustPaidContractId = getMustPaidContractId(paidJobs);
+
+    const profession = await Profile.findOne({
+      where: { id: mustPaidContractId },
+    });
+
+    res.json({
+      bestProfession: profession.profession,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
-
-const hashmapReducer = (hashmap) => (a, b) => hashmap[a] > hashmap[b] ? a : b;
 
 const datesValidation = (start, end) => {
   if (!start || !end) throw new Error("start and end are required");
@@ -29,7 +37,7 @@ const datesValidation = (start, end) => {
     throw new Error("start should be before end");
 };
 
-const getPaidJobs = async (start, end) => {
+const getPaidJobsWithContract = async (start, end) => {
   return Job.findAll({
     where: {
       paid: true,
@@ -45,32 +53,26 @@ const getPaidJobs = async (start, end) => {
   });
 };
 
-const BestProfession = async (req, res) => {
-  try {
-    const { start, end } = req.query;
+// ! if this solution have performance issues, we can use transduction concepts
+const getMustPaidContractId = (paidJobs) => {
+  const mustPaidJobsMapped = paidJobs.reduce(mustPaidJobsToContractHashMap, {});
+  const getMaxValueFromHashMap = hashmapReducer(mustPaidJobsMapped);
 
-    datesValidation(start, end);
-
-    const paidJobs = await getPaidJobs(start, end);
-
-    const mustPaidJobsMapped = paidJobs.reduce(mustPaidJobsToHashMap, {});
-
-    const getMaxValueFromHashMapReducer = hashmapReducer(mustPaidJobsMapped);
-
-    const mustPaidContractId = Object.keys(mustPaidJobsMapped).reduce(
-      getMaxValueFromHashMapReducer
-    );
-
-    const profession = await Profile.findOne({
-      where: { id: mustPaidContractId },
-    });
-
-    res.json({
-      bestProfession: profession.profession,
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+  return Object.keys(mustPaidJobsMapped).reduce(getMaxValueFromHashMap);
 };
+
+const mustPaidJobsToContractHashMap = (acc, job) => {
+  const {
+    Contract: { ContractorId },
+  } = job;
+
+  !acc[ContractorId]
+    ? (acc[ContractorId] = job.price)
+    : (acc[ContractorId] += job.price);
+
+  return acc;
+};
+
+const hashmapReducer = (hashmap) => (a, b) => hashmap[a] > hashmap[b] ? a : b;
 
 module.exports = { BestProfession };
