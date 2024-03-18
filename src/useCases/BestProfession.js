@@ -3,8 +3,9 @@
  * for any contactor that worked in the query time range.
  */
 const { Op } = require("sequelize");
+const { Job, Profile, Contract } = require("../model");
 
-const mustPaidJobsHashMap = (acc, job) => {
+const mustPaidJobsToHashMap = (acc, job) => {
   const {
     Contract: { ContractorId },
   } = job;
@@ -28,33 +29,36 @@ const datesValidation = (start, end) => {
     throw new Error("start should be before end");
 };
 
+const getPaidJobs = async (start, end) => {
+  return Job.findAll({
+    where: {
+      paid: true,
+      paymentDate: {
+        [Op.between]: [start, end],
+      },
+    },
+    include: [
+      {
+        model: Contract,
+      },
+    ],
+  });
+};
+
 const BestProfession = async (req, res) => {
   try {
     const { start, end } = req.query;
-    const { Job, Profile } = req.app.get("models");
 
     datesValidation(start, end);
 
-    const paidJobs = await Job.findAll({
-      where: {
-        paid: true,
-        paymentDate: {
-          [Op.between]: [start, end],
-        },
-      },
-      include: [
-        {
-          model: req.app.get("models").Contract,
-        },
-      ],
-    });
+    const paidJobs = await getPaidJobs(start, end);
 
-    const mustPaidJobsMapped = paidJobs.reduce(mustPaidJobsHashMap, {});
+    const mustPaidJobsMapped = paidJobs.reduce(mustPaidJobsToHashMap, {});
 
-    const getMaxValueFromHashMap = hashmapReducer(mustPaidJobsMapped);
+    const getMaxValueFromHashMapReducer = hashmapReducer(mustPaidJobsMapped);
 
     const mustPaidContractId = Object.keys(mustPaidJobsMapped).reduce(
-      getMaxValueFromHashMap
+      getMaxValueFromHashMapReducer
     );
 
     const profession = await Profile.findOne({
