@@ -12,9 +12,6 @@ const DepositMoneyByUserID = async (req, res) => {
 
   const jobs = await jobsByClientId(profile.id);
 
-  if (jobs.length === 0)
-    return res.status(404).json({ message: "No unpaid jobs" });
-
   const total = jobs.reduce((acc, job) => acc + job.price, 0);
   const twentyFivePercent = total * 0.25;
 
